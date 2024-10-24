@@ -114,12 +114,25 @@ public class ConsultaForm extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableConsultas = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 800));
 
         btnNovoConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoConsultaActionPerformed(evt);
+            }
+        });
+
+        btnAlterarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarConsultaActionPerformed(evt);
+            }
+        });
+
+        btnExcluirConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirConsultaActionPerformed(evt);
             }
         });
 
@@ -421,10 +434,13 @@ public class ConsultaForm extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(7, 7, 7)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setText("Consultas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -436,12 +452,17 @@ public class ConsultaForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,6 +504,7 @@ public class ConsultaForm extends javax.swing.JPanel {
                     consultaGeral.setHora(hora);
                     consultaGeral.setValor(valor);
                     consultaGeral.setGasto(gasto);
+                    consultaGeral.setVeterinarioId(veterinarioSelecionado.getId());
                     consultaGeral.setMotivo(motivo);
                     consultaGeral.setDiagnostico(diagnostico);
                     consultaGeral.setPrescricoes(prescricoes);
@@ -534,6 +556,7 @@ public class ConsultaForm extends javax.swing.JPanel {
         txtConsultaData.setText("");
         txtConsultaHora.setText("");
         txtConsultaValor.setText("");
+        txtConsultaGasto.setText("");
         txtConsultaHora.setText("");
         txtConsultaMotivo.setText("");
         txtConsultaDiagnostico.setText("");
@@ -578,27 +601,61 @@ public class ConsultaForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConsultaPesquisarVeterinarioActionPerformed
 
     private void tableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsultasMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoConsulta);
-        Utils.setComponentsEnabled(true, btnAlterarConsulta, btnExcluirConsulta, btnCancelarConsulta);
-        int row = tableConsultas.getSelectedRow();
-        if(row != -1) {
-            ConsultaGeral consulta = ((ConsultaGeralTableModel)tableConsultas.getModel()).getItem(row);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if(!txtConsultaData.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoConsulta);
+            Utils.setComponentsEnabled(true, btnAlterarConsulta, btnExcluirConsulta, btnCancelarConsulta);
+            int row = tableConsultas.getSelectedRow();
+            if(row != -1) {
+                ConsultaGeral consulta = ((ConsultaGeralTableModel)tableConsultas.getModel()).getItem(row);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            txtConsultaId.setText(String.valueOf(consulta.getId()));
-            Animal animal = animalController.getAnimalById(consulta.getAnimalId());
-            txtConsultaTutor.setText(tutorController.getTutorById(animal.getTutorId()).getNome());
-            txtConsultaAnimal.setText(animal.getNome());
-            txtConsultaVeterinario.setText(veterinarioController.getVeterinarioById(consulta.getVeterinarioId()).getNome());
-            txtConsultaData.setText(String.valueOf(consulta.getData().format(formatter)));
-            txtConsultaHora.setText(String.valueOf(consulta.getHora()));
-            txtConsultaValor.setText(String.valueOf(consulta.getValor()));
-            txtConsultaGasto.setText(String.valueOf(consulta.getGasto()));
-            txtConsultaMotivo.setText(consulta.getMotivo());
-            txtConsultaDiagnostico.setText(consulta.getDiagnostico());
-            txtConsultaPrescricao.setText(consulta.getPrescricoes());
+                txtConsultaId.setText(String.valueOf(consulta.getId()));
+                animalSelecionado = animalController.getAnimalById(consulta.getAnimalId());
+                tutorSelecionado = tutorController.getTutorById(animalSelecionado.getTutorId());
+                veterinarioSelecionado = veterinarioController.getVeterinarioById(consulta.getVeterinarioId());
+                txtConsultaTutor.setText(tutorSelecionado.getNome());
+                txtConsultaAnimal.setText(animalSelecionado.getNome());
+                txtConsultaVeterinario.setText(veterinarioSelecionado.getNome());
+                txtConsultaData.setText(String.valueOf(consulta.getData().format(formatter)));
+                txtConsultaHora.setText(String.valueOf(consulta.getHora()));
+                txtConsultaValor.setText(String.valueOf(consulta.getValor()));
+                txtConsultaGasto.setText(String.valueOf(consulta.getGasto()));
+                txtConsultaMotivo.setText(consulta.getMotivo());
+                txtConsultaDiagnostico.setText(consulta.getDiagnostico());
+                txtConsultaPrescricao.setText(consulta.getPrescricoes());
+            }
         }
     }//GEN-LAST:event_tableConsultasMouseClicked
+
+    private void btnAlterarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarConsultaActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoConsulta, btnAlterarConsulta, btnExcluirConsulta);                                             
+        Utils.setComponentsEnabled(true, btnSalvarConsulta);
+        Utils.setComponentsEnabled(true, txtConsultaVeterinario, btnConsultaPesquisarVeterinario, txtConsultaData, txtConsultaHora, txtConsultaValor, txtConsultaGasto, txtConsultaMotivo, txtConsultaDiagnostico, txtConsultaPrescricao);
+    }//GEN-LAST:event_btnAlterarConsultaActionPerformed
+
+    private void btnExcluirConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirConsultaActionPerformed
+        String idTxt = txtConsultaId.getText();
+        int id = Integer.parseInt(idTxt);
+        ConsultaGeral consulta = consultaController.getConsultaGeralById(id);
+        consultaController.deleteConsultaGeral(consulta);
+        Utils.showSuccessfulMessage();
+        txtConsultaId.setText("");
+        txtConsultaTutor.setText("Selecione um tutor...");
+        txtConsultaAnimal.setText("Selecione um animal...");
+        txtConsultaVeterinario.setText("Selecione um veterinario...");
+        txtConsultaData.setText("");
+        txtConsultaHora.setText("");
+        txtConsultaValor.setText("");
+        txtConsultaGasto.setText("");
+        txtConsultaHora.setText("");
+        txtConsultaMotivo.setText("");
+        txtConsultaDiagnostico.setText("");
+        txtConsultaPrescricao.setText("");
+        Utils.setComponentsEnabled(false, txtConsultaVeterinario, btnConsultaPesquisarVeterinario, txtConsultaData, txtConsultaHora, txtConsultaValor, txtConsultaGasto, txtConsultaMotivo, txtConsultaDiagnostico, txtConsultaPrescricao);
+        Utils.setComponentsEnabled(true, btnNovoConsulta);
+        Utils.setComponentsEnabled(false, btnAlterarConsulta, btnExcluirConsulta, btnCancelarConsulta, btnSalvarConsulta);
+        updateTable(tableConsultas, consultaController.getAllConsultasGerais());
+    }//GEN-LAST:event_btnExcluirConsultaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -619,6 +676,7 @@ public class ConsultaForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

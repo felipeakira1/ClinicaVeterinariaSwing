@@ -64,6 +64,10 @@ public class Servico {
         return tipo;
     }
 
+    public void setVeterinarioId(int id) {
+        this.veterinarioId = id;
+    }
+    
     public void setData(LocalDate data) {
         this.data = data;
     }

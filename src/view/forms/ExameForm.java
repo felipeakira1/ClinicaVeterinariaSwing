@@ -122,6 +122,18 @@ public class ExameForm extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarExame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarExameActionPerformed(evt);
+            }
+        });
+
+        btnExcluirExame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirExameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -409,7 +421,7 @@ public class ExameForm extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -437,7 +449,7 @@ public class ExameForm extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -562,26 +574,57 @@ public class ExameForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExamePesquisarVeterinarioActionPerformed
 
     private void tableExamesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableExamesMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoExame);
-        Utils.setComponentsEnabled(true, btnAlterarExame, btnExcluirExame, btnCancelarExame);
-        int row = tableExames.getSelectedRow();
-        if(row != -1) {
-            Exame exame = ((ExameTableModel)tableExames.getModel()).getItem(row);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            txtExameId.setText(String.valueOf(exame.getId()));
-            Animal animal = animalController.getAnimalById(exame.getAnimalId());
-            txtExameTutor.setText(tutorController.getTutorById(animal.getTutorId()).getNome());
-            txtExameAnimal.setText(animal.getNome());
-            txtExameVeterinario.setText(veterinarioController.getVeterinarioById(exame.getVeterinarioId()).getNome());
-            txtExameData.setText(String.valueOf(exame.getData().format(formatter)));
-            txtExameHora.setText(String.valueOf(exame.getHora()));
-            txtExameValor.setText(String.valueOf(exame.getValor()));
-            txtExameGasto.setText(String.valueOf(exame.getGasto()));
-            txtExameTipo.setSelectedItem(exame.getTipoExame());
-            txtExameResultados.setText(exame.getResultados());
+        if(!txtExameData.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoExame);
+            Utils.setComponentsEnabled(true, btnAlterarExame, btnExcluirExame, btnCancelarExame);
+            int row = tableExames.getSelectedRow();
+            if(row != -1) {
+                Exame exame = ((ExameTableModel)tableExames.getModel()).getItem(row);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                animalSelecionado = animalController.getAnimalById(exame.getAnimalId());
+                tutorSelecionado = tutorController.getTutorById(animalSelecionado.getId());
+                veterinarioSelecionado = veterinarioController.getVeterinarioById(exame.getVeterinarioId());
+                txtExameId.setText(String.valueOf(exame.getId()));
+                txtExameTutor.setText(tutorSelecionado.getNome());
+                txtExameAnimal.setText(animalSelecionado.getNome());
+                txtExameVeterinario.setText(veterinarioSelecionado.getNome());
+                txtExameData.setText(String.valueOf(exame.getData().format(formatter)));
+                txtExameHora.setText(String.valueOf(exame.getHora()));
+                txtExameValor.setText(String.valueOf(exame.getValor()));
+                txtExameGasto.setText(String.valueOf(exame.getGasto()));
+                txtExameTipo.setSelectedItem(exame.getTipoExame());
+                txtExameResultados.setText(exame.getResultados());
+            }
         }
     }//GEN-LAST:event_tableExamesMouseClicked
+
+    private void btnAlterarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarExameActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoExame, btnAlterarExame, btnExcluirExame);                                             
+        Utils.setComponentsEnabled(true, btnSalvarExame);
+        Utils.setComponentsEnabled(true, txtExameVeterinario, btnExamePesquisarVeterinario, txtExameData, txtExameHora, txtExameValor, txtExameGasto, txtExameTipo, txtExameResultados);
+    }//GEN-LAST:event_btnAlterarExameActionPerformed
+
+    private void btnExcluirExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirExameActionPerformed
+        String idTxt = txtExameId.getText();
+        int id = Integer.parseInt(idTxt);
+        Exame exame = exameController.getExameById(id);
+        exameController.deleteExame(exame);
+        Utils.showSuccessfulMessage();
+        txtExameId.setText("");
+        txtExameTutor.setText("Selecione um tutor...");
+        txtExameAnimal.setText("Selecione um animal...");
+        txtExameVeterinario.setText("Selecione um veterinario...");
+        txtExameData.setText("");
+        txtExameHora.setText("");
+        txtExameValor.setText("");
+        txtExameGasto.setText("");
+        txtExameTipo.setSelectedIndex(0);
+        txtExameResultados.setText("");
+        Utils.setComponentsEnabled(false, txtExameVeterinario, btnExamePesquisarVeterinario, txtExameData, txtExameHora, txtExameValor, txtExameGasto, txtExameTipo, txtExameResultados);
+        Utils.setComponentsEnabled(true, btnNovoExame);
+        Utils.setComponentsEnabled(false, btnAlterarExame, btnExcluirExame, btnCancelarExame, btnSalvarExame);
+        updateTable(tableExames, exameController.getAllExames());
+    }//GEN-LAST:event_btnExcluirExameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

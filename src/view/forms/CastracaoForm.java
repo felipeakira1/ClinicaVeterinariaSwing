@@ -17,6 +17,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import models.Animal;
 import models.Castracao;
+import models.ConsultaGeral;
 import models.Tutor;
 import models.Veterinario;
 import tablemodel.AnimalTableModel;
@@ -74,6 +75,7 @@ public class CastracaoForm extends javax.swing.JPanel {
         btnNovoCastracao = new view.components.NewButton();
         btnAlterarCastracao = new view.components.UpdateButton();
         btnExcluirCastracao = new view.components.DeleteButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -120,23 +122,43 @@ public class CastracaoForm extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarCastracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarCastracaoActionPerformed(evt);
+            }
+        });
+
+        btnExcluirCastracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirCastracaoActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setText("Castrações");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNovoCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExcluirCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNovoCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterarCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluirCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterarCastracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,7 +444,7 @@ public class CastracaoForm extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -482,11 +504,14 @@ public class CastracaoForm extends javax.swing.JPanel {
                 int id = Integer.parseInt(idTxt);
                 Castracao castracao = castracaoController.getCastracaoById(id);
                 if(castracao != null) {
+                    castracao.setVeterinarioId(veterinarioSelecionado.getId());
                     castracao.setData(data);
                     castracao.setHora(hora);
                     castracao.setValor(valor);
                     castracao.setGasto(gasto);
                     castracao.setTipoCastracao(tipo);
+                    castracao.setIdadeNaCastracao(idade);
+                    castracao.setPesoNaCastracao(peso);
                     castracaoController.updateCastracao(castracao);
                     Utils.showSuccessfulMessage();
                 } else {
@@ -579,27 +604,59 @@ public class CastracaoForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCastracaoPesquisarVeterinarioActionPerformed
 
     private void tableCastracoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCastracoesMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoCastracao);
-        Utils.setComponentsEnabled(true, btnAlterarCastracao, btnExcluirCastracao, btnCancelarCastracao);
-        int row = tableCastracoes.getSelectedRow();
-        if(row != -1) {
-            Castracao castracao = ((CastracaoTableModel)tableCastracoes.getModel()).getItem(row);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            txtCastracaoId.setText(String.valueOf(castracao.getId()));
-            Animal animal = animalController.getAnimalById(castracao.getAnimalId());
-            txtCastracaoTutor.setText(tutorController.getTutorById(animal.getTutorId()).getNome());
-            txtCastracaoAnimal.setText(animal.getNome());
-            txtCastracaoVeterinario.setText(veterinarioController.getVeterinarioById(castracao.getVeterinarioId()).getNome());
-            txtCastracaoData.setText(String.valueOf(castracao.getData().format(formatter)));
-            txtCastracaoHora.setText(String.valueOf(castracao.getHora()));
-            txtCastracaoValor.setText(String.valueOf(castracao.getValor()));
-            txtCastracaoGasto.setText(String.valueOf(castracao.getGasto()));
-            txtCastracaoTipo.setSelectedItem(castracao.getTipoCastracao());
-            txtCastracaoIdade.setText(String.valueOf(castracao.getIdadeNaCastracao()));
-            txtCastracaoPeso.setText(String.valueOf(castracao.getPesoNaCastracao()));
+        if(!txtCastracaoData.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoCastracao);
+            Utils.setComponentsEnabled(true, btnAlterarCastracao, btnExcluirCastracao, btnCancelarCastracao);
+            int row = tableCastracoes.getSelectedRow();
+            if(row != -1) {
+                Castracao castracao = ((CastracaoTableModel)tableCastracoes.getModel()).getItem(row);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                animalSelecionado = animalController.getAnimalById(castracao.getAnimalId());
+                tutorSelecionado = tutorController.getTutorById(animalSelecionado.getId());
+                veterinarioSelecionado = veterinarioController.getVeterinarioById(castracao.getVeterinarioId());
+                txtCastracaoId.setText(String.valueOf(castracao.getId()));
+                txtCastracaoTutor.setText(tutorSelecionado.getNome());
+                txtCastracaoAnimal.setText(animalSelecionado.getNome());
+                txtCastracaoVeterinario.setText(veterinarioSelecionado.getNome());
+                txtCastracaoData.setText(String.valueOf(castracao.getData().format(formatter)));
+                txtCastracaoHora.setText(String.valueOf(castracao.getHora()));
+                txtCastracaoValor.setText(String.valueOf(castracao.getValor()));
+                txtCastracaoGasto.setText(String.valueOf(castracao.getGasto()));
+                txtCastracaoTipo.setSelectedItem(castracao.getTipoCastracao());
+                txtCastracaoIdade.setText(String.valueOf(castracao.getIdadeNaCastracao()));
+                txtCastracaoPeso.setText(String.valueOf(castracao.getPesoNaCastracao()));
+            }
         }
     }//GEN-LAST:event_tableCastracoesMouseClicked
+
+    private void btnAlterarCastracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarCastracaoActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoCastracao, btnAlterarCastracao, btnExcluirCastracao);                                             
+        Utils.setComponentsEnabled(true, btnSalvarCastracao);
+        Utils.setComponentsEnabled(true, txtCastracaoVeterinario, btnCastracaoPesquisarVeterinario, txtCastracaoData, txtCastracaoHora, txtCastracaoValor, txtCastracaoGasto, txtCastracaoTipo, txtCastracaoIdade, txtCastracaoPeso);
+    }//GEN-LAST:event_btnAlterarCastracaoActionPerformed
+
+    private void btnExcluirCastracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCastracaoActionPerformed
+        String idTxt = txtCastracaoId.getText();
+        int id = Integer.parseInt(idTxt);
+        Castracao castracao = castracaoController.getCastracaoById(id);
+        castracaoController.deleteCastracao(castracao);
+        Utils.showSuccessfulMessage();
+         txtCastracaoId.setText("");
+        txtCastracaoTutor.setText("Selecione um tutor...");
+        txtCastracaoAnimal.setText("Selecione um animal...");
+        txtCastracaoVeterinario.setText("Selecione um veterinario...");
+        txtCastracaoData.setText("");
+        txtCastracaoHora.setText("");
+        txtCastracaoValor.setText("");
+        txtCastracaoGasto.setText("");
+        txtCastracaoTipo.setSelectedIndex(0);
+        txtCastracaoPeso.setText("");
+        txtCastracaoIdade.setText("");
+        Utils.setComponentsEnabled(false, txtCastracaoVeterinario, btnCastracaoPesquisarVeterinario, txtCastracaoData, txtCastracaoHora, txtCastracaoValor, txtCastracaoGasto, txtCastracaoTipo, txtCastracaoIdade, txtCastracaoPeso);
+        Utils.setComponentsEnabled(true, btnNovoCastracao);
+        Utils.setComponentsEnabled(false, btnAlterarCastracao, btnExcluirCastracao, btnCancelarCastracao, btnSalvarCastracao);
+        updateTable(tableCastracoes, castracaoController.getAllCastracoes());
+    }//GEN-LAST:event_btnExcluirCastracaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -620,6 +677,7 @@ public class CastracaoForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

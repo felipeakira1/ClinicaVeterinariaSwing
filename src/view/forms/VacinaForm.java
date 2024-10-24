@@ -56,6 +56,7 @@ public class VacinaForm extends javax.swing.JPanel {
         btnNovoVacina = new view.components.NewButton();
         btnAlterarVacina = new view.components.UpdateButton();
         btnExcluirVacina = new view.components.DeleteButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -73,6 +74,8 @@ public class VacinaForm extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableVacinas = new javax.swing.JTable();
+        txtPesquisarVeterinario = new javax.swing.JTextField();
+        btnPesquisarVeterinario = new view.components.SearchButton();
 
         setPreferredSize(new java.awt.Dimension(800, 800));
 
@@ -82,23 +85,43 @@ public class VacinaForm extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarVacina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarVacinaActionPerformed(evt);
+            }
+        });
+
+        btnExcluirVacina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirVacinaActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setText("Vacinas");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNovoVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExcluirVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(422, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNovoVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterarVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluirVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterarVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,16 +249,31 @@ public class VacinaForm extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableVacinas);
 
+        btnPesquisarVeterinario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarVeterinarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(txtPesquisarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnPesquisarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPesquisarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarVeterinario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -261,13 +299,13 @@ public class VacinaForm extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -334,18 +372,48 @@ public class VacinaForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarVacinaActionPerformed
 
     private void tableVacinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVacinasMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoVacina);
-        Utils.setComponentsEnabled(true, btnAlterarVacina, btnExcluirVacina, btnCancelarVacina);
-        int row = tableVacinas.getSelectedRow();
-        if(row != -1) {
-            Vacina vacina = ((VacinaTableModel)tableVacinas.getModel()).getItem(row);
-            txtVacinaId.setText(String.valueOf(vacina.getId()));
-            txtVacinaNome.setText(vacina.getNome());
-            txtVacinaDescricao.setText(vacina.getDescricao());
-            txtVacinaMarca.setText(vacina.getMarca());
-            txtVacinaQuantidade.setText(String.valueOf(vacina.getQuantidadeEstoque()));
+        if(!txtVacinaNome.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoVacina);
+            Utils.setComponentsEnabled(true, btnAlterarVacina, btnExcluirVacina, btnCancelarVacina);
+            int row = tableVacinas.getSelectedRow();
+            if(row != -1) {
+                Vacina vacina = ((VacinaTableModel)tableVacinas.getModel()).getItem(row);
+                txtVacinaId.setText(String.valueOf(vacina.getId()));
+                txtVacinaNome.setText(vacina.getNome());
+                txtVacinaDescricao.setText(vacina.getDescricao());
+                txtVacinaMarca.setText(vacina.getMarca());
+                txtVacinaQuantidade.setText(String.valueOf(vacina.getQuantidadeEstoque()));
+            }
         }
     }//GEN-LAST:event_tableVacinasMouseClicked
+
+    private void btnAlterarVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarVacinaActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoVacina, btnAlterarVacina, btnExcluirVacina);                                             
+        Utils.setComponentsEnabled(true, btnSalvarVacina);
+        Utils.setComponentsEnabled(true, txtVacinaNome, txtVacinaDescricao, txtVacinaMarca, txtVacinaQuantidade);
+    }//GEN-LAST:event_btnAlterarVacinaActionPerformed
+
+    private void btnExcluirVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVacinaActionPerformed
+        String idTxt = txtVacinaId.getText();
+        int id = Integer.parseInt(idTxt);
+        Vacina vacina = vacinaController.getVacinaById(id);
+        vacinaController.deleteVacina(vacina);
+        Utils.showSuccessfulMessage();
+        txtVacinaId.setText("");
+        txtVacinaNome.setText("");
+        txtVacinaDescricao.setText("");
+        txtVacinaMarca.setText("");
+        txtVacinaQuantidade.setText("");
+        Utils.setComponentsEnabled(false, txtVacinaId, txtVacinaNome, txtVacinaDescricao, txtVacinaMarca, txtVacinaQuantidade);
+        Utils.setComponentsEnabled(true, btnNovoVacina);
+        Utils.setComponentsEnabled(false, btnAlterarVacina, btnExcluirVacina, btnSalvarVacina, btnCancelarVacina);
+        updateTable(tableVacinas, vacinaController.getAllVacinas());
+    }//GEN-LAST:event_btnExcluirVacinaActionPerformed
+
+    private void btnPesquisarVeterinarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarVeterinarioActionPerformed
+        String nome = txtPesquisarVeterinario.getText();
+        updateTable(tableVacinas, vacinaController.searchVacinaByName(nome));
+    }//GEN-LAST:event_btnPesquisarVeterinarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -353,18 +421,21 @@ public class VacinaForm extends javax.swing.JPanel {
     private view.components.CancelButton btnCancelarVacina;
     private view.components.DeleteButton btnExcluirVacina;
     private view.components.NewButton btnNovoVacina;
+    private view.components.SearchButton btnPesquisarVeterinario;
     private view.components.SaveButton btnSalvarVacina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableVacinas;
+    private javax.swing.JTextField txtPesquisarVeterinario;
     private javax.swing.JTextField txtVacinaDescricao;
     private javax.swing.JTextField txtVacinaId;
     private javax.swing.JTextField txtVacinaMarca;

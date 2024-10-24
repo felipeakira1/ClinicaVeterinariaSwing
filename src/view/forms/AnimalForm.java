@@ -367,7 +367,6 @@ public class AnimalForm extends javax.swing.JPanel {
             
             if(id.isEmpty()) {
                 animalController.createAnimal(nome, especie, raca, idade, sexo, tutorSelecionado.getId());
-                Utils.showSuccessfulMessage();
             } else {
                 int animalId = Integer.parseInt(id);
                 Animal animal = animalController.getAnimalById(animalId);
@@ -379,11 +378,11 @@ public class AnimalForm extends javax.swing.JPanel {
                     animal.setSexo(sexo);
                     animal.setTutorId(tutorSelecionado.getId());
                     animalController.updateAnimal(animal);
-                    Utils.showSuccessfulMessage();
                 } else {
                     Utils.showWarningMessage("Campos obrigatórios", "Por favor, preencha todos os campos obrigatórios");
                 }
             }
+            Utils.showSuccessfulMessage();
             Utils.setComponentsEnabled(true, btnNovoAnimal);
             Utils.setComponentsEnabled(false, btnAlterarAnimal, btnExcluirAnimal, btnSalvarAnimal, btnCancelarAnimal);
             txtAnimalId.setText("");

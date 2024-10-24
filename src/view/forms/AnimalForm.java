@@ -6,10 +6,13 @@ package view.forms;
 
 import controller.AnimalController;
 import controller.TutorController;
+import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTable;
 import models.Animal;
 import models.Tutor;
 import tablemodel.AnimalTableModel;
+import tablemodel.TutorTableModel;
 import utils.Utils;
 import view.dialogs.SelecionarTutorDialog;
 
@@ -36,9 +39,15 @@ public class AnimalForm extends javax.swing.JPanel {
         Utils.setComponentsEnabled(true, btnNovoAnimal);
         Utils.setComponentsEnabled(true, btnNovoAnimal);
         Utils.setComponentsEnabled(false, btnAlterarAnimal, btnExcluirAnimal, btnSalvarAnimal, btnCancelarAnimal);
-        Utils.setComponentsEnabled(false, txtAnimalId, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalTutor, btnAnimalPesquisarTutor);
+        Utils.setComponentsEnabled(false, txtAnimalId, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalSexo, txtAnimalTutor, btnAnimalPesquisarTutor);
         txtAnimalTutor.setEditable(false);
-        Utils.updateTableModel(tableAnimais, animalController.getAllAnimais(), animalTableModel);
+        updateTable(tableAnimais, animalController.getAllAnimais());
+    }
+    
+    
+    private void updateTable(JTable table, List<Animal> animais) {
+        AnimalTableModel model = new AnimalTableModel(animais);
+        table.setModel(model);
     }
     
     @SuppressWarnings("unchecked")
@@ -49,6 +58,7 @@ public class AnimalForm extends javax.swing.JPanel {
         btnNovoAnimal = new view.components.NewButton();
         btnAlterarAnimal = new view.components.UpdateButton();
         btnExcluirAnimal = new view.components.DeleteButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -71,6 +81,8 @@ public class AnimalForm extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableAnimais = new javax.swing.JTable();
+        txtPesquisarAnimal = new javax.swing.JTextField();
+        btnPesquisarAnimal = new view.components.SearchButton();
 
         setPreferredSize(new java.awt.Dimension(800, 800));
 
@@ -80,23 +92,42 @@ public class AnimalForm extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarAnimalActionPerformed(evt);
+            }
+        });
+
+        btnExcluirAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirAnimalActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setText("Animais");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNovoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExcluirAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(422, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNovoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluirAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabel8)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,7 +196,7 @@ public class AnimalForm extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtAnimalSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtAnimalTutor)
+                                .addComponent(txtAnimalTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnAnimalPesquisarTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtAnimalIdade)))
@@ -234,7 +265,7 @@ public class AnimalForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisar animais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisar animais por nome", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         tableAnimais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -254,16 +285,31 @@ public class AnimalForm extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableAnimais);
 
+        btnPesquisarAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarAnimalActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(txtPesquisarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnPesquisarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPesquisarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarAnimal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -277,25 +323,23 @@ public class AnimalForm extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -340,8 +384,6 @@ public class AnimalForm extends javax.swing.JPanel {
                     Utils.showWarningMessage("Campos obrigatórios", "Por favor, preencha todos os campos obrigatórios");
                 }
             }
-            AnimalTableModel model = new AnimalTableModel(animalController.getAllAnimais());
-            tableAnimais.setModel(model);
             Utils.setComponentsEnabled(true, btnNovoAnimal);
             Utils.setComponentsEnabled(false, btnAlterarAnimal, btnExcluirAnimal, btnSalvarAnimal, btnCancelarAnimal);
             txtAnimalId.setText("");
@@ -350,7 +392,8 @@ public class AnimalForm extends javax.swing.JPanel {
             txtAnimalRaca.setText("");
             txtAnimalIdade.setText("");
             txtAnimalTutor.setText("");
-            Utils.setComponentsEnabled(false, txtAnimalId, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalTutor, btnAnimalPesquisarTutor);
+            updateTable(tableAnimais, animalController.getAllAnimais());
+            Utils.setComponentsEnabled(false, txtAnimalId, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalSexo, txtAnimalTutor, btnAnimalPesquisarTutor);
         } catch (NumberFormatException e) {
             Utils.showWarningMessage("Campos obrigatórios", "Por favor, preencha todos os campos obrigatórios");
         }
@@ -376,19 +419,21 @@ public class AnimalForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarAnimalActionPerformed
 
     private void tableAnimaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAnimaisMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoAnimal);
-        Utils.setComponentsEnabled(true, btnAlterarAnimal, btnExcluirAnimal, btnCancelarAnimal);
-        int row = tableAnimais.getSelectedRow();
-        if(row != -1) {
-            Animal animal = ((AnimalTableModel)tableAnimais.getModel()).getItem(row);
-            txtAnimalId.setText(String.valueOf(animal.getId()));
-            txtAnimalNome.setText(animal.getNome());
-            txtAnimalEspecie.setText(animal.getEspecie());
-            txtAnimalRaca.setText(animal.getRaca());
-            txtAnimalIdade.setText(String.valueOf(animal.getIdade()));
-            txtAnimalSexo.setSelectedItem(animal.getSexo());
-            Tutor tutor = tutorController.getTutorById(animal.getTutorId());
-            txtAnimalTutor.setText(tutor.getNome());
+        if(!txtAnimalNome.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoAnimal);
+            Utils.setComponentsEnabled(true, btnAlterarAnimal, btnExcluirAnimal, btnCancelarAnimal);
+            int row = tableAnimais.getSelectedRow();
+            if(row != -1) {
+                Animal animal = ((AnimalTableModel)tableAnimais.getModel()).getItem(row);
+                txtAnimalId.setText(String.valueOf(animal.getId()));
+                txtAnimalNome.setText(animal.getNome());
+                txtAnimalEspecie.setText(animal.getEspecie());
+                txtAnimalRaca.setText(animal.getRaca());
+                txtAnimalIdade.setText(String.valueOf(animal.getIdade()));
+                txtAnimalSexo.setSelectedItem(animal.getSexo());
+                tutorSelecionado = tutorController.getTutorById(animal.getTutorId());
+                txtAnimalTutor.setText(tutorSelecionado.getNome());
+            }
         }
     }//GEN-LAST:event_tableAnimaisMouseClicked
 
@@ -404,6 +449,35 @@ public class AnimalForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAnimalPesquisarTutorActionPerformed
 
+    private void btnAlterarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarAnimalActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoAnimal, btnAlterarAnimal, btnExcluirAnimal);                                             
+        Utils.setComponentsEnabled(true, btnSalvarAnimal);
+        Utils.setComponentsEnabled(true, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalSexo);
+    }//GEN-LAST:event_btnAlterarAnimalActionPerformed
+
+    private void btnPesquisarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarAnimalActionPerformed
+        String nome = txtPesquisarAnimal.getText();
+        updateTable(tableAnimais, animalController.searchAnimalByName(nome));
+    }//GEN-LAST:event_btnPesquisarAnimalActionPerformed
+
+    private void btnExcluirAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAnimalActionPerformed
+        String idTxt = txtAnimalId.getText();
+        int id = Integer.parseInt(idTxt);
+        Animal animal = animalController.getAnimalById(id);
+        animalController.deleteAnimal(animal);
+        Utils.showSuccessfulMessage();
+        txtAnimalId.setText("");
+        txtAnimalNome.setText("");
+        txtAnimalEspecie.setText("");
+        txtAnimalRaca.setText("");
+        txtAnimalIdade.setText("");
+        txtAnimalTutor.setText("");
+        Utils.setComponentsEnabled(false, txtAnimalNome, txtAnimalEspecie, txtAnimalRaca, txtAnimalIdade, txtAnimalSexo);
+        Utils.setComponentsEnabled(true, btnNovoAnimal);
+        Utils.setComponentsEnabled(false, btnAlterarAnimal, btnExcluirAnimal, btnCancelarAnimal, btnSalvarAnimal);
+        updateTable(tableAnimais, animalController.getAllAnimais());
+    }//GEN-LAST:event_btnExcluirAnimalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.components.UpdateButton btnAlterarAnimal;
@@ -411,6 +485,7 @@ public class AnimalForm extends javax.swing.JPanel {
     private view.components.CancelButton btnCancelarAnimal;
     private view.components.DeleteButton btnExcluirAnimal;
     private view.components.NewButton btnNovoAnimal;
+    private view.components.SearchButton btnPesquisarAnimal;
     private view.components.SaveButton btnSalvarAnimal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -419,6 +494,7 @@ public class AnimalForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -432,5 +508,6 @@ public class AnimalForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtAnimalRaca;
     private javax.swing.JComboBox<String> txtAnimalSexo;
     private javax.swing.JTextField txtAnimalTutor;
+    private javax.swing.JTextField txtPesquisarAnimal;
     // End of variables declaration//GEN-END:variables
 }

@@ -124,6 +124,18 @@ public class VacinacaoForm extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarVacinacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarVacinacaoActionPerformed(evt);
+            }
+        });
+
+        btnExcluirVacinacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirVacinacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -420,7 +432,7 @@ public class VacinacaoForm extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -448,7 +460,7 @@ public class VacinacaoForm extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -481,9 +493,8 @@ public class VacinacaoForm extends javax.swing.JPanel {
                     vacinacao.setHora(hora);
                     vacinacao.setValor(valor);
                     vacinacao.setGasto(gasto);
-                    // vacinacao.setAnimalId(animalSelecionado.getId());
-                    // vacinacao.setVeterinarioId(veterinarioSelecionado.getId());
-                    // vacinacao.setVacinaId(vacinaSelecionada.getId());
+                    vacinacao.setVeterinarioId(veterinarioSelecionado.getId());
+                    vacinacao.setVacinaId(vacinaSelecionada.getId());
                     vacinacao.setDataProximaDose(dataProximaDose);
                     vacinacaoController.updateVacinacao(vacinacao);
                     Utils.showSuccessfulMessage();
@@ -575,24 +586,29 @@ public class VacinacaoForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVacinacaoPesquisarVeterinarioActionPerformed
 
     private void tableVacinacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVacinacoesMouseClicked
-        Utils.setComponentsEnabled(false, btnNovoVacinacao);
-        Utils.setComponentsEnabled(true, btnAlterarVacinacao, btnExcluirVacinacao, btnCancelarVacinacao);
-        int row = tableVacinacoes.getSelectedRow();
-        if(row != -1) {
-            Vacinacao vacinacao = ((VacinacaoTableModel)tableVacinacoes.getModel()).getItem(row);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if(!txtVacinacaoData.isEnabled()) {
+            Utils.setComponentsEnabled(false, btnNovoVacinacao);
+            Utils.setComponentsEnabled(true, btnAlterarVacinacao, btnExcluirVacinacao, btnCancelarVacinacao);
+            int row = tableVacinacoes.getSelectedRow();
+            if(row != -1) {
+                Vacinacao vacinacao = ((VacinacaoTableModel)tableVacinacoes.getModel()).getItem(row);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            txtVacinacaoId.setText(String.valueOf(vacinacao.getId()));
-            Animal animal = animalController.getAnimalById(vacinacao.getAnimalId());
-            txtVacinacaoTutor.setText(tutorController.getTutorById(animal.getTutorId()).getNome());
-            txtVacinacaoAnimal.setText(animal.getNome());
-            txtVacinacaoVeterinario.setText(veterinarioController.getVeterinarioById(vacinacao.getVeterinarioId()).getNome());
-            txtVacinacaoData.setText(String.valueOf(vacinacao.getData().format(formatter)));
-            txtVacinacaoHora.setText(String.valueOf(vacinacao.getHora()));
-            txtVacinacaoValor.setText(String.valueOf(vacinacao.getValor()));
-            txtVacinacaoGasto.setText(String.valueOf(vacinacao.getGasto()));
-            txtVacinacaoVacina.setText(vacinaController.getVacinaById(vacinacao.getVacinaId()).getNome());
-            txtVacinacaoDataProximaDose.setText(String.valueOf(vacinacao.getDataProximaDose().format(formatter)));
+                txtVacinacaoId.setText(String.valueOf(vacinacao.getId()));
+                animalSelecionado = animalController.getAnimalById(vacinacao.getAnimalId());
+                tutorSelecionado = tutorController.getTutorById(animalSelecionado.getId());
+                veterinarioSelecionado = veterinarioController.getVeterinarioById(vacinacao.getVeterinarioId());
+                vacinaSelecionada = vacinaController.getVacinaById(vacinacao.getVacinaId());
+                txtVacinacaoTutor.setText(tutorSelecionado.getNome());
+                txtVacinacaoAnimal.setText(animalSelecionado.getNome());
+                txtVacinacaoVeterinario.setText(veterinarioSelecionado.getNome());
+                txtVacinacaoData.setText(String.valueOf(vacinacao.getData().format(formatter)));
+                txtVacinacaoHora.setText(String.valueOf(vacinacao.getHora()));
+                txtVacinacaoValor.setText(String.valueOf(vacinacao.getValor()));
+                txtVacinacaoGasto.setText(String.valueOf(vacinacao.getGasto()));
+                txtVacinacaoVacina.setText(vacinaController.getVacinaById(vacinacao.getVacinaId()).getNome());
+                txtVacinacaoDataProximaDose.setText(String.valueOf(vacinacao.getDataProximaDose().format(formatter)));
+            }
         }
     }//GEN-LAST:event_tableVacinacoesMouseClicked
 
@@ -607,6 +623,34 @@ public class VacinacaoForm extends javax.swing.JPanel {
             txtVacinacaoVacina.setText("Nenhuma vacina selecionada");
         }
     }//GEN-LAST:event_btnVacinacaoPesquisarVacinaActionPerformed
+
+    private void btnAlterarVacinacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarVacinacaoActionPerformed
+        Utils.setComponentsEnabled(false, btnNovoVacinacao, btnAlterarVacinacao, btnExcluirVacinacao);                                             
+        Utils.setComponentsEnabled(true, btnSalvarVacinacao);
+        Utils.setComponentsEnabled(true, txtVacinacaoVeterinario, btnVacinacaoPesquisarVeterinario, txtVacinacaoData, txtVacinacaoHora, txtVacinacaoValor, txtVacinacaoGasto, txtVacinacaoVacina, btnVacinacaoPesquisarVacina, txtVacinacaoDataProximaDose);
+    }//GEN-LAST:event_btnAlterarVacinacaoActionPerformed
+
+    private void btnExcluirVacinacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVacinacaoActionPerformed
+        String idTxt = txtVacinacaoId.getText();
+        int id = Integer.parseInt(idTxt);
+        Vacinacao vacinacao = vacinacaoController.getVacinacaoById(id);
+        vacinacaoController.deleteVacinacao(vacinacao);
+        Utils.showSuccessfulMessage();
+        txtVacinacaoId.setText("");
+        txtVacinacaoTutor.setText("Selecione um tutor...");
+        txtVacinacaoAnimal.setText("Selecione um animal...");
+        txtVacinacaoVeterinario.setText("Selecione um veterinario...");
+        txtVacinacaoData.setText("");
+        txtVacinacaoHora.setText("");
+        txtVacinacaoValor.setText("");
+        txtVacinacaoGasto.setText("");
+        txtVacinacaoVacina.setText("Selecione uma vacina...");
+        txtVacinacaoDataProximaDose.setText("");
+        Utils.setComponentsEnabled(false, txtVacinacaoVeterinario, btnVacinacaoPesquisarVeterinario, txtVacinacaoData, txtVacinacaoHora, txtVacinacaoValor, txtVacinacaoGasto, txtVacinacaoVacina, btnVacinacaoPesquisarVacina, txtVacinacaoDataProximaDose);
+        Utils.setComponentsEnabled(true, btnNovoVacinacao);
+        Utils.setComponentsEnabled(false, btnAlterarVacinacao, btnExcluirVacinacao, btnCancelarVacinacao, btnSalvarVacinacao);
+        updateTable(tableVacinacoes, vacinacaoController.getAllVacinacoes());
+    }//GEN-LAST:event_btnExcluirVacinacaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -34,6 +34,10 @@ public class Vacinacao extends Servico{
     public LocalDate getDataProximaDose() {
         return DataProximaDose;
     }
+    
+    public void setVacinaId(int id) {
+        this.vacina_id = id;
+    }
 
     public void setDataProximaDose(LocalDate DataProximaDose) {
         this.DataProximaDose = DataProximaDose;

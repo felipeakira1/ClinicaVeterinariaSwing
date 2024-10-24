@@ -4,17 +4,11 @@
  */
 package view.forms;
 
-import controller.TutorController;
 import controller.VeterinarioController;
-import dao.ITutorDAO;
-import dao.InMemoryTutorDAO;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
-import javax.swing.text.MaskFormatter;
-import models.Tutor;
 import models.Veterinario;
-import tablemodel.TutorTableModel;
 import tablemodel.VeterinarioTableModel;
 import utils.Utils;
 
@@ -45,7 +39,6 @@ public class VeterinarioForm extends javax.swing.JPanel {
         Utils.setComponentsEnabled(false, txtVeterinarioId, txtVeterinarioNome, txtVeterinarioEndereco, txtVeterinarioCpf, txtVeterinarioCrmv);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

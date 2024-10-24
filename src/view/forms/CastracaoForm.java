@@ -17,7 +17,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import models.Animal;
 import models.Castracao;
-import models.ConsultaGeral;
 import models.Tutor;
 import models.Veterinario;
 import tablemodel.AnimalTableModel;

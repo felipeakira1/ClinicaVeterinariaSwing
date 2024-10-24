@@ -1,10 +1,5 @@
 package dao;
 
-import dao.DbVacinacaoDAO;
-import dao.DbExameDAO;
-import dao.DbConsultaGeralDAO;
-import dao.DbCastracaoDAO;
-import dao.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

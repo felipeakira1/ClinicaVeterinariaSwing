@@ -32,7 +32,6 @@ public class ServicoForm extends javax.swing.JPanel {
         jTabbedPane1.addTab("Castracao", castracaoForm);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

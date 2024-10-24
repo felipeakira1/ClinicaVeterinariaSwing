@@ -18,11 +18,9 @@ import javax.swing.JTable;
 import models.Animal;
 import models.ConsultaGeral;
 import models.Tutor;
-import models.Vacina;
 import models.Veterinario;
 import tablemodel.AnimalTableModel;
 import tablemodel.ConsultaGeralTableModel;
-import tablemodel.VacinaTableModel;
 import utils.Utils;
 import view.dialogs.SelecionarAnimalDialog;
 import view.dialogs.SelecionarTutorDialog;
@@ -69,7 +67,6 @@ public class ConsultaForm extends javax.swing.JPanel {
         table.setModel(model);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

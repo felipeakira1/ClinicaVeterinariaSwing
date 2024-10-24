@@ -5,7 +5,6 @@
 package view.forms;
 
 import controller.AnimalController;
-import controller.ConsultaGeralController;
 import controller.ExameController;
 import controller.TutorController;
 import controller.VeterinarioController;
@@ -17,15 +16,10 @@ import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import models.Animal;
-import models.ConsultaGeral;
 import models.Exame;
 import models.Tutor;
-import models.Vacina;
 import models.Veterinario;
-import tablemodel.AnimalTableModel;
-import tablemodel.ConsultaGeralTableModel;
 import tablemodel.ExameTableModel;
-import tablemodel.VacinaTableModel;
 import utils.Utils;
 import view.dialogs.SelecionarAnimalDialog;
 import view.dialogs.SelecionarTutorDialog;
@@ -70,7 +64,6 @@ public class ExameForm extends javax.swing.JPanel {
         table.setModel(model);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

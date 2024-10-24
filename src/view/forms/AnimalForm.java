@@ -7,12 +7,10 @@ package view.forms;
 import controller.AnimalController;
 import controller.TutorController;
 import java.util.List;
-import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import models.Animal;
 import models.Tutor;
 import tablemodel.AnimalTableModel;
-import tablemodel.TutorTableModel;
 import utils.Utils;
 import view.dialogs.SelecionarTutorDialog;
 
@@ -50,7 +48,6 @@ public class AnimalForm extends javax.swing.JPanel {
         table.setModel(model);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

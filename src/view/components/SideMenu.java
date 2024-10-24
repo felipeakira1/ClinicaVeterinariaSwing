@@ -27,7 +27,6 @@ public class SideMenu extends javax.swing.JPanel {
         jButton5.setBackground(Color.WHITE);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

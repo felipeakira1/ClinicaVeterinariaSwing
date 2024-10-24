@@ -4,21 +4,11 @@
  */
 package view.forms;
 
-import controller.TutorController;
 import controller.VacinaController;
-import controller.VeterinarioController;
-import dao.ITutorDAO;
-import dao.InMemoryTutorDAO;
 import java.util.List;
-import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
-import javax.swing.text.MaskFormatter;
-import models.Tutor;
 import models.Vacina;
-import models.Veterinario;
-import tablemodel.TutorTableModel;
 import tablemodel.VacinaTableModel;
-import tablemodel.VeterinarioTableModel;
 import utils.Utils;
 
 /**
@@ -48,7 +38,6 @@ public class VacinaForm extends javax.swing.JPanel {
         Utils.setComponentsEnabled(false, txtVacinaId, txtVacinaNome, txtVacinaDescricao, txtVacinaMarca, txtVacinaQuantidade);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

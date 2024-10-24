@@ -5,12 +5,9 @@
 package view.forms;
 
 import controller.TutorController;
-import dao.ITutorDAO;
-import dao.InMemoryTutorDAO;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
-import javax.swing.text.MaskFormatter;
 import models.Tutor;
 import tablemodel.TutorTableModel;
 import utils.Utils;
@@ -44,7 +41,6 @@ public class TutorForm extends javax.swing.JPanel {
         table.setModel(model);
     }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

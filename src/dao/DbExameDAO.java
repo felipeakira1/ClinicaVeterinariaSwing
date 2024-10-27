@@ -37,7 +37,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
         try {
             Servico servico = DbServicoDAO.getInstance().create(data, hora, valor, gasto, animal_id, veterinario_id, 3);
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO Exame (servico_id, tipoExame, resultados) VALUES (?, ?, ?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO Exame (servico_id, tipo_exame, resultados) VALUES (?, ?, ?)");
             stmt.setInt(1, servico.getId());
             stmt.setString(2, tipoExame);
             stmt.setString(3, resultados);
@@ -51,7 +51,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
     public Exame buildObject(ResultSet rs) {
         Exame exame = null;
         try {
-            exame = new Exame(rs.getInt("id"), rs.getDate("data").toLocalDate(),rs.getTime("hora").toLocalTime(), rs.getDouble("valor"), rs.getDouble("gasto"), rs.getInt("animal_id"), rs.getInt("veterinario_id"), rs.getInt("tipo"), rs.getString("tipoExame"), rs.getString("resultados"));
+            exame = new Exame(rs.getInt("id"), rs.getDate("data").toLocalDate(),rs.getTime("hora").toLocalTime(), rs.getDouble("valor"), rs.getDouble("gasto"), rs.getInt("animal_id"), rs.getInt("veterinario_id"), rs.getInt("tipo"), rs.getString("tipo_exame"), rs.getString("resultados"));
         } catch(SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -97,7 +97,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
         try {
             DbServicoDAO.getInstance().update(exame);
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE Exame SET tipoExame=?, resultados=? WHERE servico_id=?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE Exame SET tipo_exame=?, resultados=? WHERE servico_id=?");
             stmt.setString(1, exame.getTipoExame());
             stmt.setString(2, exame.getResultados());
             stmt.setInt(3, exame.getId());

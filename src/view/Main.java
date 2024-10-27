@@ -72,21 +72,21 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void initControllers() {
-        ITutorDAO tutorDAO = InMemoryTutorDAO.getInstance();
+        ITutorDAO tutorDAO = DbTutorDAO.getInstance();
+        IAnimalDAO animalDAO = DbAnimalDAO.getInstance();
+        IVeterinarioDAO veterinarioDAO = DbVeterinarioDAO.getInstance();
+        IConsultaGeralDAO consultaGeralDAO = DbConsultaGeralDAO.getInstance();
+        IVacinacaoDAO vacinacaoDAO = DbVacinacaoDAO.getInstance();
+        IExameDAO exameDAO = DbExameDAO.getInstance();
+        IVacinaDAO vacinaDAO = DbVacinaDAO.getInstance();
+        ICastracaoDAO castracaoDAO = DbCastracaoDAO.getInstance();
         tutorController = new TutorController(tutorDAO);
-        IAnimalDAO animalDAO = InMemoryAnimalDAO.getInstance();
         animalController = new AnimalController(animalDAO);
-        IVeterinarioDAO veterinarioDAO = InMemoryVeterinarioDAO.getInstance();
         veterinarioController = new VeterinarioController(veterinarioDAO);
-        IVacinaDAO vacinaDAO = InMemoryVacinaDAO.getInstance();
         vacinaController = new VacinaController(vacinaDAO);
-        IConsultaGeralDAO consultaGeralDAO = InMemoryConsultaGeralDAO.getInstance();
         consultaGeralController = new ConsultaGeralController(consultaGeralDAO);
-        IVacinacaoDAO vacinacaoDAO = InMemoryVacinacaoDAO.getInstance();
         vacinacaoController = new VacinacaoController(vacinacaoDAO);
-        IExameDAO exameDAO = InMemoryExameDAO.getInstance();
         exameController = new ExameController(exameDAO);
-        ICastracaoDAO castracaoDAO = InMemoryCastracaoDAO.getInstance();
         castracaoController = new CastracaoController(castracaoDAO);
     }
     

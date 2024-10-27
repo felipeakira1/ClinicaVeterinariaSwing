@@ -33,7 +33,7 @@ public class DbServicoDAO extends DAO implements IServicoDAO{
     public Servico create(LocalDate data, LocalTime hora, double valor, double gasto, int animal_id, int veterinario_id, int tipo) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO Servico (data, hora, valor, gasto, animal_id, veterinario_id, tipo) VALUES (?, ?, ?, ?, ?, ?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO Servico (data, hora, valor, gasto, animal_id, veterinario_id, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)");
             Date dataSQL = Date.valueOf(data);
             Time horaSQL = Time.valueOf(hora);
             stmt.setDate(1, dataSQL);

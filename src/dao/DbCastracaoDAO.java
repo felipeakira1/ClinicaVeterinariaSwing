@@ -37,7 +37,7 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
         try {
             Servico servico = DbServicoDAO.getInstance().create(data, hora, valor, gasto, animal_id, veterinario_id, 2);
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO Castracao (servico_id, tipoCastracao, idadeNaCastracao, pesoNaCastracao) VALUES (?, ?, ?, ?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO Castracao (servico_id, tipo_castracao, idadeNaCastracao, pesoNaCastracao) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, servico.getId());
             stmt.setString(2, tipoCastracao);
             stmt.setInt(3, idadeNaCastracao);

@@ -6,6 +6,8 @@ package tablemodel;
 
 import controller.AnimalController;
 import controller.TutorController;
+import controller.VeterinarioController;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.ConsultaGeral;
 
@@ -15,10 +17,12 @@ import models.ConsultaGeral;
  */
 public class ConsultaGeralTableModel extends GenericTableModel<ConsultaGeral> {
     private AnimalController animalController;
+    VeterinarioController veterinarioController;
     
-    public ConsultaGeralTableModel(List<ConsultaGeral> vDados, AnimalController animalController) {
+    public ConsultaGeralTableModel(List<ConsultaGeral> vDados, AnimalController animalController, VeterinarioController veterinarioController) {
         super(vDados, new String[]{"Data", "Hora", "Valor", "Gasto", "Animal", "Veterinario", "Motivo", "Diagnostico", "Prescricoes"});
         this.animalController = animalController;
+        this.veterinarioController = veterinarioController;
     }
     
     @Override
@@ -52,7 +56,7 @@ public class ConsultaGeralTableModel extends GenericTableModel<ConsultaGeral> {
         ConsultaGeral consulta = (ConsultaGeral)vDados.get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return consulta.getData();
+                return (consulta.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             case 1:
                 return consulta.getHora();
             case 2:
@@ -62,7 +66,7 @@ public class ConsultaGeralTableModel extends GenericTableModel<ConsultaGeral> {
             case 4:
                 return (animalController.getAnimalById(consulta.getAnimalId())).getNome();
             case 5:
-                return consulta.getVeterinarioId();
+                return (veterinarioController.getVeterinarioById(consulta.getVeterinarioId())).getNome();
             case 6:
                 return consulta.getMotivo();
             case 7:

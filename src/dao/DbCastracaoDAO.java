@@ -33,11 +33,12 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
         return (instance == null ? (instance = new DbCastracaoDAO()) : instance);
     }
     
+    @Override
     public Castracao create(LocalDate data, LocalTime hora, double valor, double gasto, int animal_id, int veterinario_id, String tipoCastracao, int idadeNaCastracao, double pesoNaCastracao) {
         try {
             Servico servico = DbServicoDAO.getInstance().create(data, hora, valor, gasto, animal_id, veterinario_id, 2);
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO Castracao (servico_id, tipo_castracao, idadeNaCastracao, pesoNaCastracao) VALUES (?, ?, ?, ?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO Castracao (servico_id, tipo_castracao, idade_animal, peso_animal) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, servico.getId());
             stmt.setString(2, tipoCastracao);
             stmt.setInt(3, idadeNaCastracao);
@@ -52,7 +53,7 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
     public Castracao buildObject(ResultSet rs) {
         Castracao castracao = null;
         try {
-            castracao = new Castracao(rs.getInt("id"), rs.getDate("data").toLocalDate(),rs.getTime("hora").toLocalTime(), rs.getDouble("valor"), rs.getDouble("gasto"), rs.getInt("animal_id"), rs.getInt("veterinario_id"), rs.getInt("tipo"), rs.getString("tipoCastracao"), rs.getInt("idadeNaCastracao"), rs.getDouble("pesoNaCastracao"));
+            castracao = new Castracao(rs.getInt("id"), rs.getDate("data").toLocalDate(),rs.getTime("hora").toLocalTime(), rs.getDouble("valor"), rs.getDouble("gasto"), rs.getInt("animal_id"), rs.getInt("veterinario_id"), rs.getInt("tipo"), rs.getString("tipo_castracao"), rs.getInt("idade_animal"), rs.getDouble("peso_animal"));
         } catch(SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -73,6 +74,7 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
         return castracoes;
     }
     
+    @Override
     public List<Castracao> retrieveAll() {
         return this.retrieve("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id");
     }
@@ -81,26 +83,50 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
         return this.retrieve("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id WHERE id = " + lastId("Castracao", "id"));
     }
     
+    @Override
     public Castracao retrieveById(int id) {
         List<Castracao> castracao = this.retrieve("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id WHERE id = " + id);
         return (castracao.isEmpty() ? null : castracao.get(0));
     }
 
+    @Override
     public Castracao retrieveByAnimalId(int animalId) {
         List<Castracao> castracao = this.retrieve("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id WHERE animal_id = " + animalId);
         return (castracao.isEmpty() ? null : castracao.get(0));
     }
 
+    @Override
     public Castracao retrieveByVeterinarioId(int veterinarioId) {
         List<Castracao> castracao = this.retrieve("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id WHERE veterinario_id = " + veterinarioId);
         return (castracao.isEmpty() ? null : castracao.get(0));
     }
     
+    @Override
+    public List<Castracao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        StringBuilder query = new StringBuilder("SELECT * FROM Servico JOIN Castracao ON Servico.id = Castracao.servico_id WHERE 1=1");
+        
+        if (animalId != null) {
+            query.append(" AND animal_id = ").append(animalId);
+        }
+        if (veterinarioId != null) {
+            query.append(" AND veterinario_id = ").append(veterinarioId);
+        }
+        if (dataApartir != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') >= '").append(dataApartir.toString()).append("'");
+        }
+        if (dataAntes != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') <= '").append(dataAntes.toString()).append("'");
+        }
+
+        return this.retrieve(query.toString());
+    }
+    
+    @Override
     public void update(Castracao castracao) {
         try {
             DbServicoDAO.getInstance().update(castracao);
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE Castracao SET tipoCastracao=?, idadeNaCastracao=?, pesoNaCastracao=? WHERE servico_id=?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE Castracao SET tipo_castracao=?, idade_animal=?, peso_animal=? WHERE servico_id=?");
             stmt.setString(1, castracao.getTipoCastracao());
             stmt.setInt(2, castracao.getIdadeNaCastracao());
             stmt.setDouble(3, castracao.getPesoNaCastracao());
@@ -111,6 +137,7 @@ public class DbCastracaoDAO extends DAO implements ICastracaoDAO {
         }
     }
     
+    @Override
     public void delete(Castracao castracao) {
         DbServicoDAO.getInstance().delete(castracao);
     }

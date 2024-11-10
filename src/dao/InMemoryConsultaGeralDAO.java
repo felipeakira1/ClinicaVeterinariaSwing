@@ -76,6 +76,16 @@ public class InMemoryConsultaGeralDAO extends DAO implements IConsultaGeralDAO {
                               .filter(cg -> cg.getVeterinarioId() == veterinarioId)
                               .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<ConsultaGeral> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return consultasGerais.stream()
+                              .filter(cg -> cg.getAnimalId() == animalId)
+                              .filter(cg -> cg.getVeterinarioId() == veterinarioId)
+                              .filter(cg -> (cg.getData().isEqual(dataApartir) || cg.getData().isAfter(dataApartir)) &&
+                                            (cg.getData().isEqual(dataAntes) || cg.getData().isBefore(dataAntes)))
+                              .collect(Collectors.toList());
+    }
 
     @Override
     public void update(ConsultaGeral consultaGeral) {

@@ -40,6 +40,10 @@ public class ExameController {
     public List<Exame> getExamesByVeterinarioId(int veterinarioId) {
         return exameDAO.retrieveByVeterinarioId(veterinarioId);
     }
+    
+    public List<Exame> filterExamesByAnimalVeterinarioAndData(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return exameDAO.retrieveByAnimalAndVeterinarioAndDateRange(animalId, veterinarioId, dataApartir, dataAntes);
+    }
 
     public void updateExame(Exame exame) {
         exameDAO.update(exame);

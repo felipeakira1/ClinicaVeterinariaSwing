@@ -19,6 +19,7 @@ public interface IExameDAO {
     List<Exame> retrieveAll();
     List<Exame> retrieveByAnimalId(int animalId);
     List<Exame> retrieveByVeterinarioId(int veterinarioId);
+    List<Exame> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes);
     void update(Exame exame);
     void delete(Exame exame);
 }

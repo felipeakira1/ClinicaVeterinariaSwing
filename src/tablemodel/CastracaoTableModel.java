@@ -8,6 +8,7 @@ import controller.AnimalController;
 import controller.VeterinarioController;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.Castracao;
 
@@ -56,7 +57,7 @@ public class CastracaoTableModel extends GenericTableModel<Castracao> {
         Castracao castracao = (Castracao)vDados.get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return castracao.getData();
+                return castracao.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             case 1:
                 return castracao.getHora();
             case 2:

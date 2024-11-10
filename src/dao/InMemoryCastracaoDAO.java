@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import models.Castracao;
 
 /**
@@ -64,6 +65,15 @@ public class InMemoryCastracaoDAO extends DAO implements ICastracaoDAO {
         return castracao.orElse(null);
     }
 
+    @Override
+    public List<Castracao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return castracoes.stream()
+                              .filter(cg -> cg.getAnimalId() == animalId)
+                              .filter(cg -> cg.getVeterinarioId() == veterinarioId)
+                              .filter(cg -> (cg.getData().isEqual(dataApartir) || cg.getData().isAfter(dataApartir)) &&
+                                            (cg.getData().isEqual(dataAntes) || cg.getData().isBefore(dataAntes)))
+                              .collect(Collectors.toList());
+    }
     @Override
     public void update(Castracao castracao) {
         Optional<Castracao> existingCastracao = castracoes.stream().filter(c -> c.getId() == castracao.getId()).findFirst();

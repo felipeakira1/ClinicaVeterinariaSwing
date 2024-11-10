@@ -35,6 +35,10 @@ public class AnimalController {
         return animalDAO.retrieveBySimilarName(name);
     }
     
+    public List<Animal> getAnimalByTutorIdByName(int tutorId, String name) {
+        return animalDAO.retrieveByTutorIdBySimilarName(tutorId, name);
+    }
+    
     public List<Animal> getAnimalByTutorId(int id) {
         return animalDAO.retrieveByTutorId(id);
     }

@@ -67,6 +67,16 @@ public class InMemoryVacinacaoDAO extends DAO implements IVacinacaoDAO {
                 .filter(v -> v.getVeterinarioId() == veterinarioId)
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<Vacinacao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return vacinacoes.stream()
+                              .filter(cg -> cg.getAnimalId() == animalId)
+                              .filter(cg -> cg.getVeterinarioId() == veterinarioId)
+                              .filter(cg -> (cg.getData().isEqual(dataApartir) || cg.getData().isAfter(dataApartir)) &&
+                                            (cg.getData().isEqual(dataAntes) || cg.getData().isBefore(dataAntes)))
+                              .collect(Collectors.toList());
+    }
 
     @Override
     public void update(Vacinacao vacinacao) {

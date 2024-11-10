@@ -20,6 +20,7 @@ public interface IConsultaGeralDAO {
     List<ConsultaGeral> retrieveLast();
     List<ConsultaGeral> retrieveByAnimalId(int animalId);
     List<ConsultaGeral> retrieveByVeterinarioId(int veterinarioId);
+    List<ConsultaGeral> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes);
     void update(ConsultaGeral consultaGeral);
     void delete(ConsultaGeral consultaGeral);
 }

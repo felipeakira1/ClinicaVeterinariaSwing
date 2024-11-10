@@ -33,6 +33,10 @@ public class CastracaoController {
         return castracaoDAO.retrieveById(id);
     }
 
+    public List<Castracao> filterCastracaoByAnimalVeterinarioAndData(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return castracaoDAO.retrieveByAnimalAndVeterinarioAndDateRange(animalId, veterinarioId, dataApartir, dataAntes);
+    }
+
     public void updateCastracao(Castracao castracao) {
         castracaoDAO.update(castracao);
     }

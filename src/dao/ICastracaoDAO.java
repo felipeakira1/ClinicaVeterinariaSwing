@@ -19,6 +19,7 @@ public interface ICastracaoDAO {
     List<Castracao> retrieveAll();
     Castracao retrieveByAnimalId(int animalId);
     Castracao retrieveByVeterinarioId(int veterinarioId);
+    List<Castracao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes);
     void update(Castracao castracao);
     void delete(Castracao castracao);
 }

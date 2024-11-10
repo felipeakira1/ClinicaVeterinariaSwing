@@ -40,6 +40,10 @@ public class ConsultaGeralController {
     public List<ConsultaGeral> getConsultasGeraisByVeterinarioId(int veterinarioId) {
         return consultaGeralDAO.retrieveByVeterinarioId(veterinarioId);
     }
+    
+    public List<ConsultaGeral> filterConsultasByAnimalVeterinarioAndData(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return consultaGeralDAO.retrieveByAnimalAndVeterinarioAndDateRange(animalId, veterinarioId, dataApartir, dataAntes);
+    }
 
     public void updateConsultaGeral(ConsultaGeral consultaGeral) {
         consultaGeralDAO.update(consultaGeral);

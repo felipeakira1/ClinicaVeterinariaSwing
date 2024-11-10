@@ -19,6 +19,7 @@ public interface IVacinacaoDAO {
     List<Vacinacao> retrieveAll();
     List<Vacinacao> retrieveByAnimalId(int animalId);
     List<Vacinacao> retrieveByVeterinarioId(int veterinarioId);
+    List<Vacinacao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes);
     void update(Vacinacao vacinacao);
     void delete(Vacinacao vacinacao);
 }

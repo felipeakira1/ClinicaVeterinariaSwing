@@ -86,6 +86,27 @@ public class DbConsultaGeralDAO extends DAO implements IConsultaGeralDAO {
         return this.retrieve("SELECT * FROM Servico JOIN ConsultaGeral ON Servico.id = ConsultaGeral.servico_id WHERE veterinario_id = " + veterinarioId);
     }
     
+    public List<ConsultaGeral> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        System.out.println(dataApartir);
+        System.out.println(dataAntes);
+        StringBuilder query = new StringBuilder("SELECT * FROM Servico JOIN ConsultaGeral ON Servico.id = ConsultaGeral.servico_id WHERE 1=1");
+        
+        if (animalId != null) {
+            query.append(" AND animal_id = ").append(animalId);
+        }
+        if (veterinarioId != null) {
+            query.append(" AND veterinario_id = ").append(veterinarioId);
+        }
+        if (dataApartir != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') >= '").append(dataApartir.toString()).append("'");
+        }
+        if (dataAntes != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') <= '").append(dataAntes.toString()).append("'");
+        }
+
+        return this.retrieve(query.toString());
+    }
+    
     public void update(ConsultaGeral consultaGeral) {
         try {
             DbServicoDAO.getInstance().update(consultaGeral);

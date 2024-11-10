@@ -8,6 +8,7 @@ import controller.AnimalController;
 import controller.VeterinarioController;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.Exame;
 
@@ -55,7 +56,7 @@ public class ExameTableModel extends GenericTableModel<Exame> {
         Exame exame = (Exame)vDados.get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return exame.getData();
+                return exame.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             case 1:
                 return exame.getHora();
             case 2:

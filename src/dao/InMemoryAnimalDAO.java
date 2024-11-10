@@ -72,6 +72,23 @@ public class InMemoryAnimalDAO extends DAO implements IAnimalDAO {
     public List<Animal> retrieveAll() {
         return new ArrayList<>(animais); // Retorna uma nova lista para evitar modificações diretas
     }
+    
+    @Override
+    public List<Animal> retrieveByTutorIdBySimilarName(int tutorId, String nome) {
+        List<Animal> animaisDoTutor = new ArrayList<>();
+        for(Animal animal : animais) {
+            if(animal.getTutorId() == tutorId) {
+                animaisDoTutor.add(animal);
+            }
+        }
+        List<Animal> animaisDoTutorComNomeSimilar = new ArrayList<>();
+        for(Animal animal : animaisDoTutor) {
+            if(animal.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                animaisDoTutorComNomeSimilar.add(animal);
+            }
+        }
+        return animaisDoTutorComNomeSimilar;
+    }
 
     @Override
     public void update(Animal animal) {

@@ -42,6 +42,8 @@ public class VacinacaoForm extends javax.swing.JPanel {
     Animal animalSelecionado;
     Veterinario veterinarioSelecionado;
     Vacina vacinaSelecionada;
+    Animal filtrarAnimalSelecionado;
+    Veterinario filtrarVeterinarioSelecionado;
     
     public VacinacaoForm(VacinacaoController vacinacaoController, AnimalController animalController, TutorController tutorController, VeterinarioController veterinarioController, VacinaController vacinaController) {
         this.vacinacaoController = vacinacaoController;
@@ -115,6 +117,23 @@ public class VacinacaoForm extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableVacinacoes = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        btnFiltrarAnimal = new view.components.SearchButton();
+        txtFiltrarDataFinal = new JFormattedTextField(Utils.getDateFormatter());  ;
+        jLabel14 = new javax.swing.JLabel();
+        btnFiltrar = new view.components.SearchButton();
+        txtFiltrarAnimal = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        btnLimparVeterinario = new view.components.CancelButton();
+        jLabel17 = new javax.swing.JLabel();
+        txtFiltrarDataInicial = new JFormattedTextField(Utils.getDateFormatter());  ;
+        txtFiltrarVeterinario = new javax.swing.JTextField();
+        btnLimparAnimal = new view.components.CancelButton();
+        btnFiltrarVeterinario = new view.components.SearchButton();
+        btnLimparDataAntes = new view.components.CancelButton();
+        btnLimparDataApartir = new view.components.CancelButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 800));
 
@@ -423,19 +442,158 @@ public class VacinacaoForm extends javax.swing.JPanel {
         });
         jScrollPane5.setViewportView(tableVacinacoes);
 
+        jLabel16.setText("A partir de:");
+
+        btnFiltrarAnimal.setText("");
+        btnFiltrarAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarAnimalActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Filtrar por veterinário");
+
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
+
+        txtFiltrarAnimal.setText("Selecione um animal...");
+
+        jLabel12.setText("Filtrar por animal");
+
+        btnLimparVeterinario.setText("");
+        btnLimparVeterinario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparVeterinarioActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Antes de:");
+
+        txtFiltrarVeterinario.setText("Selecione um veterinario...");
+
+        btnLimparAnimal.setText("");
+        btnLimparAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparAnimalActionPerformed(evt);
+            }
+        });
+
+        btnFiltrarVeterinario.setText("");
+        btnFiltrarVeterinario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarVeterinarioActionPerformed(evt);
+            }
+        });
+
+        btnLimparDataAntes.setText("");
+        btnLimparDataAntes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparDataAntesActionPerformed(evt);
+            }
+        });
+
+        btnLimparDataApartir.setText("");
+        btnLimparDataApartir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparDataApartirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFiltrarAnimal)
+                            .addComponent(txtFiltrarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnFiltrarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(btnFiltrarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimparAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimparVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(15, 15, 15)))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtFiltrarDataFinal)
+                            .addComponent(txtFiltrarDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimparDataApartir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimparDataAntes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnLimparAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtFiltrarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnFiltrarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txtFiltrarDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel16)))
+                            .addComponent(btnLimparDataApartir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimparVeterinario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtFiltrarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnFiltrarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14)
+                                .addComponent(txtFiltrarDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel17))))
+                    .addComponent(btnLimparDataAntes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setText("Vacinações");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -447,12 +605,17 @@ public class VacinacaoForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -460,7 +623,7 @@ public class VacinacaoForm extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -562,7 +725,11 @@ public class VacinacaoForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVacinacaoPesquisarTutorActionPerformed
 
     private void btnVacinacaoPesquisarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacinacaoPesquisarAnimalActionPerformed
-        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController);
+        if(tutorSelecionado == null) {
+            Utils.showWarningMessage("Erro", "Selecione um tutor");
+            return;
+        }
+        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController, tutorController, tutorSelecionado);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         animalSelecionado = dialog.getAnimalSelecionado();
@@ -652,11 +819,97 @@ public class VacinacaoForm extends javax.swing.JPanel {
         updateTable(tableVacinacoes, vacinacaoController.getAllVacinacoes());
     }//GEN-LAST:event_btnExcluirVacinacaoActionPerformed
 
+    private void btnFiltrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarAnimalActionPerformed
+        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        filtrarAnimalSelecionado = dialog.getAnimalSelecionado();
+        if(filtrarAnimalSelecionado != null) {
+            txtFiltrarAnimal.setText(filtrarAnimalSelecionado.getNome());
+        } else {
+            txtFiltrarAnimal.setText("Nenhum animal selecionado");
+        }
+    }//GEN-LAST:event_btnFiltrarAnimalActionPerformed
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        Integer animalId = (filtrarAnimalSelecionado != null) ? filtrarAnimalSelecionado.getId() : null;
+        Integer veterinarioId = (filtrarVeterinarioSelecionado != null) ? filtrarVeterinarioSelecionado.getId() : null;
+        LocalDate dataAPartir = null;
+        LocalDate dataAntes = null;
+
+        // Tentativa de conversão dos campos de data
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataInicialText = txtFiltrarDataInicial.getText().trim();
+        String dataFinalText = txtFiltrarDataFinal.getText().trim();
+        String placeholder = "__/__/____"; // Placeholder da máscara de data
+
+        try {
+            if (!dataInicialText.equals(placeholder)) {
+                dataAPartir = LocalDate.parse(dataInicialText, dateFormatter);
+            }
+            if (!dataFinalText.equals(placeholder)) {
+                dataAntes = LocalDate.parse(dataFinalText, dateFormatter);
+            }
+        } catch (DateTimeParseException e) {
+            Utils.showWarningMessage("Formato de Data Inválido", "Por favor, insira as datas no formato dd/MM/yyyy.");
+            return;
+        }
+
+        try {
+            // Chama o método de atualização da tabela apenas com os parâmetros válidos
+            updateTable(tableVacinacoes, vacinacaoController.filterVacinacoesByAnimalVeterinarioAndData(animalId, veterinarioId, dataAPartir, dataAntes));
+        } catch (NullPointerException e) {
+            System.out.println("Erro ao filtrar consultas: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnLimparVeterinarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparVeterinarioActionPerformed
+        filtrarVeterinarioSelecionado = null;
+        txtFiltrarVeterinario.setText("Selecione um veterinario...");
+    }//GEN-LAST:event_btnLimparVeterinarioActionPerformed
+
+    private void btnLimparAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparAnimalActionPerformed
+        filtrarAnimalSelecionado = null;
+        txtFiltrarAnimal.setText("Selecione um animal...");
+    }//GEN-LAST:event_btnLimparAnimalActionPerformed
+
+    private void btnFiltrarVeterinarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarVeterinarioActionPerformed
+        SelecionarVeterinarioDialog dialog = new SelecionarVeterinarioDialog(null, true, veterinarioController);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        filtrarVeterinarioSelecionado = dialog.getVeterinarioSelecionado();
+        if(filtrarVeterinarioSelecionado != null) {
+            txtFiltrarVeterinario.setText(filtrarVeterinarioSelecionado.getNome());
+        } else {
+            txtFiltrarVeterinario.setText("Nenhum veterinario selecionado");
+        }
+    }//GEN-LAST:event_btnFiltrarVeterinarioActionPerformed
+
+    private void btnLimparDataAntesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparDataAntesActionPerformed
+        txtFiltrarDataFinal.setText("");
+    }//GEN-LAST:event_btnLimparDataAntesActionPerformed
+
+    private void btnLimparDataApartirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparDataApartirActionPerformed
+        try {
+            txtFiltrarDataInicial.setText("");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnLimparDataApartirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.components.UpdateButton btnAlterarVacinacao;
     private view.components.CancelButton btnCancelarVacinacao;
     private view.components.DeleteButton btnExcluirVacinacao;
+    private view.components.SearchButton btnFiltrar;
+    private view.components.SearchButton btnFiltrarAnimal;
+    private view.components.SearchButton btnFiltrarVeterinario;
+    private view.components.CancelButton btnLimparAnimal;
+    private view.components.CancelButton btnLimparDataAntes;
+    private view.components.CancelButton btnLimparDataApartir;
+    private view.components.CancelButton btnLimparVeterinario;
     private view.components.NewButton btnNovoVacinacao;
     private view.components.SaveButton btnSalvarVacinacao;
     private view.components.SearchButton btnVacinacaoPesquisarAnimal;
@@ -666,11 +919,16 @@ public class VacinacaoForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -680,8 +938,13 @@ public class VacinacaoForm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable tableVacinacoes;
+    private javax.swing.JTextField txtFiltrarAnimal;
+    private javax.swing.JFormattedTextField txtFiltrarDataFinal;
+    private javax.swing.JFormattedTextField txtFiltrarDataInicial;
+    private javax.swing.JTextField txtFiltrarVeterinario;
     private javax.swing.JTextField txtVacinacaoAnimal;
     private javax.swing.JFormattedTextField txtVacinacaoData;
     private javax.swing.JFormattedTextField txtVacinacaoDataProximaDose;

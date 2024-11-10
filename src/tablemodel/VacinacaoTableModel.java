@@ -9,6 +9,7 @@ import controller.VacinaController;
 import controller.VeterinarioController;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.Vacinacao;
 
@@ -58,7 +59,7 @@ public class VacinacaoTableModel extends GenericTableModel<Vacinacao> {
         Vacinacao vacinacao = (Vacinacao)vDados.get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return vacinacao.getData();
+                return vacinacao.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             case 1:
                 return vacinacao.getHora();
             case 2:

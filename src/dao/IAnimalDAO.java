@@ -16,6 +16,7 @@ public interface IAnimalDAO {
     Animal retrieveById(int id);
     List<Animal> retrieveAll();
     List<Animal> retrieveBySimilarName(String nome);
+    List<Animal> retrieveByTutorIdBySimilarName(int tutorId, String nome);
     List<Animal> retrieveByTutorId(int id);
     void update(Animal animal);
     void delete(Animal animal);

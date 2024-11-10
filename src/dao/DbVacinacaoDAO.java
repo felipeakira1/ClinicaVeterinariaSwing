@@ -26,6 +26,7 @@ public class DbVacinacaoDAO extends DAO implements IVacinacaoDAO {
         return (instance == null ? (instance = new DbVacinacaoDAO()) : instance);
     }
     
+    @Override
     public Vacinacao create(LocalDate data, LocalTime hora, double valor, double gasto, int animal_id, int veterinario_id, int vacina_id, LocalDate data_proxima_dose) {
         try {
             Servico servico = DbServicoDAO.getInstance().create(data, hora, valor, gasto, animal_id, veterinario_id, 0);
@@ -66,6 +67,7 @@ public class DbVacinacaoDAO extends DAO implements IVacinacaoDAO {
         return vacinacoes;
     }
     
+    @Override
     public List<Vacinacao> retrieveAll() {
         return this.retrieve("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id");
     }
@@ -74,19 +76,43 @@ public class DbVacinacaoDAO extends DAO implements IVacinacaoDAO {
         return this.retrieve("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id WHERE id = " + lastId("Vacinacao", "id"));
     }
     
+    @Override
     public Vacinacao retrieveById(int id) {
         List<Vacinacao> vacinacao = this.retrieve("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id WHERE id = " + id);
         return (vacinacao.isEmpty() ? null : vacinacao.get(0));
     }
     
+    @Override
     public List<Vacinacao> retrieveByAnimalId(int animalId) {
         return this.retrieve("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id WHERE animal_id = " + animalId);
     }
 
+    @Override
     public List<Vacinacao> retrieveByVeterinarioId(int veterinarioId) {
         return this.retrieve("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id WHERE veterinario_id = " + veterinarioId);
     }
+    
+    @Override
+    public List<Vacinacao> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        StringBuilder query = new StringBuilder("SELECT * FROM Servico JOIN Vacinacao ON Servico.id = Vacinacao.servico_id WHERE 1=1");
+        
+        if (animalId != null) {
+            query.append(" AND animal_id = ").append(animalId);
+        }
+        if (veterinarioId != null) {
+            query.append(" AND veterinario_id = ").append(veterinarioId);
+        }
+        if (dataApartir != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') >= '").append(dataApartir.toString()).append("'");
+        }
+        if (dataAntes != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') <= '").append(dataAntes.toString()).append("'");
+        }
 
+        return this.retrieve(query.toString());
+    }
+
+    @Override
     public void update(Vacinacao vacinacao) {
         try {
             DbServicoDAO.getInstance().update(vacinacao);
@@ -102,6 +128,7 @@ public class DbVacinacaoDAO extends DAO implements IVacinacaoDAO {
         }
     }
     
+    @Override
     public void delete(Vacinacao vacinacao) {
         DbServicoDAO.getInstance().delete(vacinacao);
     }

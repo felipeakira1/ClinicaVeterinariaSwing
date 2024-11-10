@@ -6,9 +6,13 @@ package view.dialogs;
 
 import tablemodel.AnimalTableModel;
 import controller.AnimalController;
+import controller.TutorController;
 import dao.IAnimalDAO;
+import dao.ITutorDAO;
 import dao.InMemoryAnimalDAO;
+import dao.InMemoryTutorDAO;
 import models.Animal;
+import models.Tutor;
 
 /**
  *
@@ -21,12 +25,29 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
      */
     private Animal animal;
     private AnimalController animalController;
+    private TutorController tutorController;
+    private Tutor tutor;
     
     public SelecionarAnimalDialog(java.awt.Frame parent, boolean modal, AnimalController animalController) {
         super(parent, modal);
         initComponents();
         this.animalController = animalController;
         AnimalTableModel model = new AnimalTableModel(this.animalController.getAllAnimais());
+        tableAnimais.setModel(model);
+    }
+    
+    public SelecionarAnimalDialog(java.awt.Frame parent, boolean modal, AnimalController animalController, TutorController tutorController, Tutor tutor) {
+        super(parent, modal);
+        initComponents();
+        this.animalController = animalController;
+        this.tutor = tutor;
+        
+        AnimalTableModel model;
+        if(tutor != null) {
+            model = new AnimalTableModel(this.animalController.getAnimalByTutorId(tutor.getId()));
+        } else {
+            model = new AnimalTableModel(this.animalController.getAllAnimais());
+        }
         tableAnimais.setModel(model);
     }
 
@@ -40,7 +61,7 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableAnimais = new javax.swing.JTable();
@@ -54,13 +75,18 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
         jLabel1.setText("Selecionar animal");
 
         jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -70,7 +96,7 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3)
+                    .addComponent(txtNome)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -167,6 +193,17 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String name = txtNome.getText();
+        AnimalTableModel model;
+        if(tutor != null) {
+            model = new AnimalTableModel(this.animalController.getAnimalByTutorIdByName(tutor.getId(), name));
+        } else {
+            model = new AnimalTableModel(this.animalController.searchAnimalByName(name));
+        }
+        tableAnimais.setModel(model);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     public Animal getAnimalSelecionado() {
         return animal;
     }
@@ -222,7 +259,7 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tableAnimais;
+    private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

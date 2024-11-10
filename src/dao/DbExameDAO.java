@@ -33,6 +33,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
         return (instance == null ? (instance = new DbExameDAO()) : instance);
     }
     
+    @Override
     public Exame create(LocalDate data, LocalTime hora, double valor, double gasto, int animal_id, int veterinario_id, String tipoExame, String resultados) {
         try {
             Servico servico = DbServicoDAO.getInstance().create(data, hora, valor, gasto, animal_id, veterinario_id, 3);
@@ -72,6 +73,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
         return exames;
     }
     
+    @Override
     public List<Exame> retrieveAll() {
         return this.retrieve("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id");
     }
@@ -80,19 +82,43 @@ public class DbExameDAO extends DAO implements IExameDAO {
         return this.retrieve("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id WHERE id = " + lastId("Exame", "id"));
     }
     
+    @Override
     public Exame retrieveById(int id) {
         List<Exame> exame = this.retrieve("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id WHERE id = " + id);
         return (exame.isEmpty() ? null : exame.get(0));
     }
 
+    @Override
     public List<Exame> retrieveByAnimalId(int animalId) {
         return this.retrieve("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id WHERE animal_id = " + animalId);
     }
     
+    @Override
     public List<Exame> retrieveByVeterinarioId(int veterinarioId) {
         return this.retrieve("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id WHERE veterinario_id = " + veterinarioId);
     }
+    
+    @Override
+    public List<Exame> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        StringBuilder query = new StringBuilder("SELECT * FROM Servico JOIN Exame ON Servico.id = Exame.servico_id WHERE 1=1");
+        
+        if (animalId != null) {
+            query.append(" AND animal_id = ").append(animalId);
+        }
+        if (veterinarioId != null) {
+            query.append(" AND veterinario_id = ").append(veterinarioId);
+        }
+        if (dataApartir != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') >= '").append(dataApartir.toString()).append("'");
+        }
+        if (dataAntes != null) {
+            query.append(" AND datetime(data / 1000, 'unixepoch') <= '").append(dataAntes.toString()).append("'");
+        }
 
+        return this.retrieve(query.toString());
+    }
+    
+    @Override
     public void update(Exame exame) {
         try {
             DbServicoDAO.getInstance().update(exame);
@@ -107,6 +133,7 @@ public class DbExameDAO extends DAO implements IExameDAO {
         }
     }
     
+    @Override
     public void delete(Exame exame) {
         DbServicoDAO.getInstance().delete(exame);
     }

@@ -67,6 +67,16 @@ public class InMemoryExameDAO extends DAO implements IExameDAO {
                 .filter(e -> e.getVeterinarioId() == veterinarioId)
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<Exame> retrieveByAnimalAndVeterinarioAndDateRange(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return exames.stream()
+                              .filter(cg -> cg.getAnimalId() == animalId)
+                              .filter(cg -> cg.getVeterinarioId() == veterinarioId)
+                              .filter(cg -> (cg.getData().isEqual(dataApartir) || cg.getData().isAfter(dataApartir)) &&
+                                            (cg.getData().isEqual(dataAntes) || cg.getData().isBefore(dataAntes)))
+                              .collect(Collectors.toList());
+    }
 
     @Override
     public void update(Exame exame) {

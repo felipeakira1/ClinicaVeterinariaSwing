@@ -27,6 +27,7 @@ public class DbAnimalDAO extends DAO implements IAnimalDAO{
         return (instance == null ? (instance = new DbAnimalDAO()) : instance);
     }
     
+    @Override
     public Animal create(String nome, String especie, String raca, int idade, String sexo, int tutorId) {
         try {
             PreparedStatement stmt;
@@ -74,6 +75,7 @@ public class DbAnimalDAO extends DAO implements IAnimalDAO{
         return animais;
     }
     
+    @Override
     public List<Animal> retrieveAll() {
         return this.retrieve("SELECT * FROM Animal");
     }
@@ -82,19 +84,28 @@ public class DbAnimalDAO extends DAO implements IAnimalDAO{
         return this.retrieve("SELECT * FROM Animal WHERE id = " + lastId("Animal", "id"));
     }
     
+    @Override
     public Animal retrieveById(int id) {
         List<Animal> animais = this.retrieve("SELECT * FROM Animal WHERE id = " + id);
         return (animais.isEmpty() ? null : animais.get(0));
     }
     
+    @Override
     public List<Animal> retrieveBySimilarName(String nome) {
         return this.retrieve("SELECT * FROM Animal WHERE nome LIKE '%" + nome + "%'");
     }
 
+    @Override
     public List<Animal> retrieveByTutorId(int tutorId) {
         return this.retrieve("SELECT * FROM Animal WHERE tutor_id = " + tutorId);
     }
     
+    @Override
+    public List<Animal> retrieveByTutorIdBySimilarName(int tutorId, String nome) {
+        return this.retrieve("SELECT * FROM Animal WHERE nome LIKE '%" + nome + "%' AND tutor_id = " + tutorId);
+    }
+    
+    @Override
     public void update(Animal animal) {
         try {
             PreparedStatement stmt;
@@ -112,6 +123,7 @@ public class DbAnimalDAO extends DAO implements IAnimalDAO{
         }
     }
     
+    @Override
     public void delete(Animal animal) {
         PreparedStatement stmt;
         try {

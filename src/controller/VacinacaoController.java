@@ -40,6 +40,10 @@ public class VacinacaoController {
     public List<Vacinacao> getVacinacoesByVeterinarioId(int veterinarioId) {
         return vacinacaoDAO.retrieveByVeterinarioId(veterinarioId);
     }
+    
+    public List<Vacinacao> filterVacinacoesByAnimalVeterinarioAndData(Integer animalId, Integer veterinarioId, LocalDate dataApartir, LocalDate dataAntes) {
+        return vacinacaoDAO.retrieveByAnimalAndVeterinarioAndDateRange(animalId, veterinarioId, dataApartir, dataAntes);
+    }
 
     public void updateVacinacao(Vacinacao vacinacao) {
         vacinacaoDAO.update(vacinacao);

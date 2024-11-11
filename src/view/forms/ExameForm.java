@@ -787,7 +787,7 @@ public class ExameForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExcluirExameActionPerformed
 
     private void btnFiltrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarAnimalActionPerformed
-        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController);
+        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController, tutorController);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         filtrarAnimalSelecionado = dialog.getAnimalSelecionado();

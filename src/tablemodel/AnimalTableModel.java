@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package tablemodel;
+import controller.TutorController;
 import models.Animal;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.List;
  * @author Felipe
  */
 public class AnimalTableModel extends GenericTableModel<Animal> {
-
-    public AnimalTableModel(List vDados) {
-        super(vDados, new String[]{"Nome", "Espécie", "Raça", "Idade", "Sexo"});
+    private TutorController tutorController;
+    
+    public AnimalTableModel(List vDados, TutorController tutorController) {
+        super(vDados, new String[]{"Nome", "Espécie", "Raça", "Idade", "Sexo", "Tutor"});
+        this.tutorController = tutorController;
     }
     
     @Override
@@ -29,6 +32,8 @@ public class AnimalTableModel extends GenericTableModel<Animal> {
             case 3:
                 return String.class;
             case 4:
+                return String.class;
+            case 5:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -49,6 +54,8 @@ public class AnimalTableModel extends GenericTableModel<Animal> {
                 return animal.getIdade();
             case 4:
                 return animal.getSexo();
+            case 5:
+                return tutorController.getTutorById(animal.getTutorId()).getNome();
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }

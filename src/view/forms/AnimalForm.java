@@ -27,7 +27,7 @@ public class AnimalForm extends javax.swing.JPanel {
     public AnimalForm(AnimalController animalController, TutorController tutorController) {
         this.animalController = animalController;
         this.tutorController = tutorController;
-        this.animalTableModel = new AnimalTableModel(animalController.getAllAnimais());
+        this.animalTableModel = new AnimalTableModel(animalController.getAllAnimais(), tutorController);
         initComponents();
         initPanel();
     }
@@ -44,7 +44,7 @@ public class AnimalForm extends javax.swing.JPanel {
     
     
     private void updateTable(JTable table, List<Animal> animais) {
-        AnimalTableModel model = new AnimalTableModel(animais);
+        AnimalTableModel model = new AnimalTableModel(animais, tutorController);
         table.setModel(model);
     }
     

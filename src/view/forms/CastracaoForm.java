@@ -47,7 +47,7 @@ public class CastracaoForm extends javax.swing.JPanel {
         this.animalController = animalController;
         this.tutorController = tutorController;
         this.veterinarioController = veterinarioController;
-        this.animalTableModel = new AnimalTableModel(animalController.getAllAnimais());
+        this.animalTableModel = new AnimalTableModel(animalController.getAllAnimais(), tutorController);
         initComponents();
         initPanel();
     }
@@ -817,7 +817,7 @@ public class CastracaoForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExcluirCastracaoActionPerformed
 
     private void btnFiltrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarAnimalActionPerformed
-        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController);
+        SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(null, true, animalController, tutorController);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         filtrarAnimalSelecionado = dialog.getAnimalSelecionado();

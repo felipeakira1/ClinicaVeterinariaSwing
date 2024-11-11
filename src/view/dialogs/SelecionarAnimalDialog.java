@@ -28,11 +28,12 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
     private TutorController tutorController;
     private Tutor tutor;
     
-    public SelecionarAnimalDialog(java.awt.Frame parent, boolean modal, AnimalController animalController) {
+    public SelecionarAnimalDialog(java.awt.Frame parent, boolean modal, AnimalController animalController, TutorController tutorController) {
         super(parent, modal);
         initComponents();
         this.animalController = animalController;
-        AnimalTableModel model = new AnimalTableModel(this.animalController.getAllAnimais());
+        this.tutorController = tutorController;
+        AnimalTableModel model = new AnimalTableModel(this.animalController.getAllAnimais(), tutorController);
         tableAnimais.setModel(model);
     }
     
@@ -40,13 +41,14 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.animalController = animalController;
+        this.tutorController = tutorController;
         this.tutor = tutor;
         
         AnimalTableModel model;
         if(tutor != null) {
-            model = new AnimalTableModel(this.animalController.getAnimalByTutorId(tutor.getId()));
+            model = new AnimalTableModel(this.animalController.getAnimalByTutorId(tutor.getId()), tutorController);
         } else {
-            model = new AnimalTableModel(this.animalController.getAllAnimais());
+            model = new AnimalTableModel(this.animalController.getAllAnimais(), tutorController);
         }
         tableAnimais.setModel(model);
     }
@@ -197,9 +199,9 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
         String name = txtNome.getText();
         AnimalTableModel model;
         if(tutor != null) {
-            model = new AnimalTableModel(this.animalController.getAnimalByTutorIdByName(tutor.getId(), name));
+            model = new AnimalTableModel(this.animalController.getAnimalByTutorIdByName(tutor.getId(), name), tutorController);
         } else {
-            model = new AnimalTableModel(this.animalController.searchAnimalByName(name));
+            model = new AnimalTableModel(this.animalController.searchAnimalByName(name), tutorController);
         }
         tableAnimais.setModel(model);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -239,7 +241,9 @@ public class SelecionarAnimalDialog extends javax.swing.JDialog {
             public void run() {
                 IAnimalDAO animalDAO = InMemoryAnimalDAO.getInstance();
                 AnimalController animalController = new AnimalController(animalDAO);
-                SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(new javax.swing.JFrame(), true, animalController);
+                ITutorDAO tutorDAO = InMemoryTutorDAO.getInstance();
+                TutorController tutorController = new TutorController(tutorDAO);
+                SelecionarAnimalDialog dialog = new SelecionarAnimalDialog(new javax.swing.JFrame(), true, animalController, tutorController);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
